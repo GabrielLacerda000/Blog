@@ -21,12 +21,17 @@ class PostController extends Controller {
         return new PostResource($post);
     }
 
-    public function show() {
+    public function show($id) {
         
+        $post = Post::findOrFail($id);
+        
+        return new PostResource($post);
     }
+
     public function update() {
 
     }
+
     public function destroy() {
 
     }
