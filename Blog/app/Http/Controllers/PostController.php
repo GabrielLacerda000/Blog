@@ -24,12 +24,15 @@ class PostController extends Controller {
     public function show($id) {
         
         $post = Post::findOrFail($id);
-        
         return new PostResource($post);
     }
+    
+    public function update(PostRequest $request, $id) {
+        
+        $post = Post::findOrFail($id);
+        $post->update($request->all());
 
-    public function update() {
-
+        return new PostResource($post);
     }
 
     public function destroy() {
