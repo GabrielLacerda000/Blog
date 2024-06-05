@@ -35,7 +35,8 @@ class PostController extends Controller {
         return new PostResource($post);
     }
 
-    public function destroy() {
-
+    public function destroy($id) {
+        $post = Post::findOrFail($id);
+        $post->delete();
     }
 }
