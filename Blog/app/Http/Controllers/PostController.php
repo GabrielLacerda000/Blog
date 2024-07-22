@@ -21,22 +21,19 @@ class PostController extends Controller {
         return new PostResource($post);
     }
 
-    public function show($id) {
+    public function show(Post $post) {
         
-        $post = Post::findOrFail($id);
         return new PostResource($post);
     }
     
-    public function update(PostRequest $request, $id) {
-        
-        $post = Post::findOrFail($id);
+    public function update(PostRequest $request, Post $post) {
         $post->update($request->all());
 
         return new PostResource($post);
     }
 
-    public function destroy($id) {
-        $post = Post::findOrFail($id);
+    public function destroy(Post $post) {
         $post->delete();
+        return response()->json(['message' => 'Post deleted successfully'], 200);
     }
 }
