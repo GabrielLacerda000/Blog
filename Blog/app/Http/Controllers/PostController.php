@@ -49,6 +49,11 @@ class PostController extends Controller {
     }
 
     public function destroy(Post $post) {
+
+        if(auth()->user()->id !== $post->user_id) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
         $post->delete();
         return response()->json(['message' => 'Post deleted successfully'], 200);
     }

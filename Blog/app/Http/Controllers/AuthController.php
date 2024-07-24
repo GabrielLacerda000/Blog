@@ -17,10 +17,10 @@ class AuthController extends Controller
         $credentials = $request->validated();
         
         if($token = Auth::attempt($credentials)) {
-        return $this->respondWithToken($token, $credentials);
-    }
+            return $this->respondWithToken($token, $credentials);
+        }
 
-        return response()->Json([['message' => 'Unauthorized'], 403]);
+        return response()->Json([['message' => 'Credentials does not match our records'], 403]);
     }
 
     public function register(RegisterRequest $request) {
@@ -35,8 +35,15 @@ class AuthController extends Controller
         } 
 
         $token= auth()->login($newUser);
-            return $this->respondWithToken($token, $newUser);
 
+        return $this->respondWithToken($token, $newUser);
+
+    }
+
+    public function logout() {
+        auth()->logout();
+
+        return response()->json(['message' => 'Successfully logged out']);
     }
 
     protected function respondWithToken($token, $user) {

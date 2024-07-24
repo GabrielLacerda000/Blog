@@ -48,6 +48,7 @@ class PostControllerTest extends TestCase
         $postData = [
             'title' => 'New Post',
             'content' => 'Content of the new post',
+            'tag_id' => 2,
         ];
 
         $response = $this->postJson('/api/posts', $postData, $this->headers());
