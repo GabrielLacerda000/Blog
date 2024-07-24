@@ -2,17 +2,50 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Actions\RegisterUser;
+use App\Http\Requests\AuthRequest;
+use App\Http\Requests\RegisterRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function auth(Request $request) {
-        
-        if(Auth::attempt($request->only('email', 'password'))) {
-            return response()->Json([['message' => 'Authorized'], 200]);
-        }
+    public function __construct(public User $user){}
 
-        return response()->Json([['message' => 'Not Authorized'], 403]);
+    public function login(AuthRequest $request) {
+        $credentials = $request->validated();
+        
+        if($token = Auth::attempt($credentials)) {
+        return $this->respondWithToken($token, $credentials);
+    }
+
+        return response()->Json([['message' => 'Unauthorized'], 403]);
+    }
+
+    public function register(RegisterRequest $request) {
+        
+        $newUser = $this->user->create($request->validated());
+       
+        if(!$newUser) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'An error occured while trying to create user'
+            ], 500);
+        } 
+
+        $token= auth()->login($newUser);
+            return $this->respondWithToken($token, $newUser);
+
+    }
+
+    protected function respondWithToken($token, $user) {
+        return response()->json([
+            'status' => 'success',
+            'user' => $user,
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            // 'expires_in' => auth()->factory()->getTTL() * 60
+        ]);
     }
 }

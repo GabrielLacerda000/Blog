@@ -8,12 +8,9 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // })->middleware('auth:sanctum');
 
-// Route::controller(PostController::class)->group(function() {
-//     Route::get('/posts', 'index');
-//     Route::post('/posts/create', 'store');
-//     Route::get('/posts/{id}', 'show');
-// });
+Route::middleware('api')->apiResource('/posts', PostController::class);
 
-Route::apiResource('/posts', PostController::class);
-
-Route::post('/login', [AuthController::class, 'auth']);
+Route::controller(AuthController::class)->group(function() {
+    Route::post('/auth/login',  'login');
+    Route::post('/auth/register',  'register');
+});
