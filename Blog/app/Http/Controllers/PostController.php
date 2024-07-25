@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller {
 
@@ -14,29 +16,47 @@ class PostController extends Controller {
     }
     
     public function store(PostRequest $request) {
+        
+        $post = Post::create([
+            'title' => $request->title,
+            'content' => $request->content,
+            'tag_id' => $request->tag_id,
+            'user_id' => auth()->user()->id,
+        ]);
 
-        $post = Post::create($request->all());
-
-        // return response()->json(new PostResource($post), 200);
         return new PostResource($post);
     }
 
-    public function show($id) {
+    public function show(Post $post) {
         
-        $post = Post::findOrFail($id);
         return new PostResource($post);
     }
     
-    public function update(PostRequest $request, $id) {
+    public function update(UpdatePostRequest $request, Post $post) {
+
+        if(auth()->user()->id !== $post->user_id) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
         
-        $post = Post::findOrFail($id);
-        $post->update($request->all());
+        $post->update([
+            'title' => $request->title,
+            'content' => $request->content,
+            'tag_id' => $request->tag_id,
+            'user_id' => auth()->user()->id,
+        ]);
 
         return new PostResource($post);
     }
 
-    public function destroy($id) {
-        $post = Post::findOrFail($id);
+    public function destroy(Post $post) {
+
+        if(auth()->user()->id !== $post->user_id) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
         $post->delete();
+        return response()->json(['message' => 'Post deleted successfully'], 200);
     }
+
+    
 }
