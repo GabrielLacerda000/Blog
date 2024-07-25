@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             TagsSeeder::class,
-            // PostSeeder::class
+            PostSeeder::class,
+            UserSeeder::class,
         ]);
         
         // create sample user
