@@ -34,7 +34,7 @@ To clone and run this application, you'll need [Git](https://git-scm.com) and [L
 
 ```bash
 # Clone this repository
-$ [git clone https://github.com/amitmerchant1990/electron-markdownify](https://github.com/GabrielLacerda000/Blog.git)
+$ git clone repo 
 
 # Go into the repository
 $ cd blog
