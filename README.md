@@ -45,6 +45,12 @@ $ composer update
 # In case of errors
 $ composer install
 
+# Run migrations
+$ php artisan migrate
+
+# Run seeders
+$ php artisan db:seed
+
 # Run the app
 $ php artisan serve
 ```
