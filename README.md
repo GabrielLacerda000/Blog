@@ -64,6 +64,12 @@ Routes:
 * POST - /auth/register - register a user with email, password and name
 * POST - /auth/logout - logout user
 
+ ## How to use tests
+ 
+  ```bash
+$ php artisan test
+```
+obs: tests are not complete yet and may have bugs and troubles
 
 ## Futures updates
 
