@@ -11,7 +11,7 @@ class Authenticate {
 
         public function handle() {
             if($token = Auth::attempt($this->credentials)) {
-            // return response()->Json([['message' => 'Authorized'], 200]);
+           
             return $this->respondWithToken($token, $this->credentials);
         }
 

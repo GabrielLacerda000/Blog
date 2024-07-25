@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Authenticate;
 use App\Http\Actions\RegisterUser;
 use App\Http\Requests\AuthRequest;
 use App\Http\Requests\RegisterRequest;
@@ -14,6 +15,7 @@ class AuthController extends Controller
     public function __construct(public User $user){}
 
     public function login(AuthRequest $request) {
+
         $credentials = $request->validated();
         
         if($token = Auth::attempt($credentials)) {
