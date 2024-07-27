@@ -24,6 +24,7 @@ class PostRequest extends FormRequest
         return [
             'title' => 'required|string|max:40',
             'content' => 'required|string|max:240',
+            'tag_id' => 'required|exists:tags,id',
             'user_id' => 'required'
         ];
     }
