@@ -39,6 +39,9 @@ $ git clone repo
 # Go into the repository
 $ cd blog
 
+# Generate key
+$ php artisan key:generate
+
 # Install dependencies
 $ composer update
 
