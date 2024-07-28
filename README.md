@@ -15,6 +15,10 @@
 * Tests
 * validation forms
 
+ ## Requirements
+ * php 8.2.3 or above
+ 
+
 ## ENV
 
 Setup database credentials
